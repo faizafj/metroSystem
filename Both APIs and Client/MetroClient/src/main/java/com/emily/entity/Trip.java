@@ -3,6 +3,7 @@ package com.emily.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
@@ -13,15 +14,16 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString
 public class Trip {	
 
 	@Id
-    @GeneratedValue
-    private int customerId;
     private int tripId;
+
+    private int customerId;
     private int swipeInStationId;
     private int swipeOutStationId;
-    private LocalDateTime swipeInDateAnTime;
+    private LocalDateTime swipeInDateAndTime;
     private LocalDateTime swipeOutDateAndTime;
     private double tripFare;
     
@@ -30,6 +32,8 @@ public class Trip {
 		
 		this.customerId = customerId;
 		this.swipeInStationId = swipeInStation;
-		this.swipeInDateAnTime = swipeInDateAnTime;
+		this.swipeInDateAndTime = swipeInDateAndTime;
 	}
+
+
 }

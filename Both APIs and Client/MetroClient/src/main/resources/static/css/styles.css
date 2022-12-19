@@ -183,6 +183,12 @@ div#LogoImage
     margin: 0;
 }
 
+#signUpDeal{
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
 
 #side3 {
     grid-column-start: 2;
@@ -198,8 +204,8 @@ div#LogoImage
 
 
 #tapInButton {
-    width: 100%;
-    height: 50%;
+    width: 500px;
+    height: 100px;
     background-color: white;
     border: solid #49BD63 10px;
     color: black;
@@ -208,9 +214,20 @@ div#LogoImage
     font-size: 20px;
 }
 
+#formThingy{
+    background: white;
+    font-size: 20px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+    border-radius: 5px;
+}
+
+
 #tapOutButton {
-    width: 100%;
-    height: 50%;
+    width: 500px;
+    height: 100px;
     background-color: white;
     border: solid #D82525 10px;
     color: black;

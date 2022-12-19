@@ -13,7 +13,7 @@ public interface ClientService {
 	Customer addNewCustomer(Customer customer);
 	Collection<Station> getAllStations();
 	double calculatePrice(int startingPoint, int finishingPoint,double price);
-	Bill tapOut(int stationId, Customer customer,int tripId,double price);
+	Bill tapOut(int stationId, Customer customer,int tripId);
 	Customer deductCustomerBalance(int customerId, double amount);
 	Station getStationById(int stationId);
 	Trip tapIn(Customer customer, int swipeInStationId);

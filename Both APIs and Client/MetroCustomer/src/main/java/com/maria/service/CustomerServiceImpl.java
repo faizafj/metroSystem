@@ -64,7 +64,10 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 	
 	public Customer deductBalance(int id, double amount) {
-		Customer nCustomer =getCustomer(id); 
+		Customer nCustomer =getCustomer(id);
+
+		System.out.println(amount);
+		System.out.println("deductAmount" + (nCustomer.getCustomerBalance() - amount));
 			if(nCustomer !=null) {
 				nCustomer.setCustomerBalance(nCustomer.getCustomerBalance()-amount);
 				dao.save(nCustomer);

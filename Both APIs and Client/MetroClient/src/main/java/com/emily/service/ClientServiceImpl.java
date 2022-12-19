@@ -56,6 +56,7 @@ public class ClientServiceImpl implements ClientService {
 		}
 				
 		Trip trip = new Trip(customer.getCustomerId(), swipeInStationId, LocalDateTime.now());
+		System.out.print("Swipe in trip: " + trip);
 		dao.save(trip);
 		return trip;
 	}
@@ -104,23 +105,29 @@ public class ClientServiceImpl implements ClientService {
 	//calculate total travel price
 	@Override
 	public double calculatePrice(int startingPoint, int finishingPoint, double price) {
-		return ((finishingPoint - startingPoint)*price);
+		System.out.println(startingPoint);
+		System.out.println(finishingPoint);
+		return ((startingPoint - finishingPoint)*price);
 	}
 
 	//finish the trip and produce customer bill for displaying
 	@Override
-	public Bill tapOut(int swipeOutStationId,Customer customer,int tripId, double price) {
+	public Bill tapOut(int swipeOutStationId,Customer customer,int tripId) {
 			
-		List<Trip> tripList = dao.findTripsByCustomerId(customer.getCustomerId());
-		
-		for(Trip trip:tripList) {
-			if (trip.getTripId()==tripId) {
+//		List<Trip> tripList = dao.findTripsByCustomerId(customer.getCustomerId());
+		Trip trip=dao.findById(tripId).orElse(null);
+		System.out.print("Trip object: tap out from service" + trip);
+//		for(Trip trip:tripList) {
+			if (trip!=null) {
 				
 				int swipeInStationId = trip.getSwipeInStationId();
 				String swipeInStationName = getStationById(swipeInStationId).getStationName();
 				String swipeOutStationName=getStationById(swipeOutStationId).getStationName();
 				
-				double amountToPay = calculatePrice(swipeOutStationId,swipeInStationId ,price);
+				double amountToPay = calculatePrice(swipeOutStationId,swipeInStationId ,5);
+
+//				amountToPay = amountToPay * -1;
+				System.out.println("This is the amount: " + amountToPay);
 				
 				Customer newCustomer = deductCustomerBalance(customer.getCustomerId(), amountToPay);
 				if(newCustomer !=null) {
@@ -133,12 +140,12 @@ public class ClientServiceImpl implements ClientService {
 				
 				dao.save(trip);
 				return bill;
-					
+
 				}//end of if customer !=null
 				
 			}//end of if trip.getTripId()==tripId
 					
-		}//end of for loop
+		//end of for loop
 		return null;				
 	}
 			

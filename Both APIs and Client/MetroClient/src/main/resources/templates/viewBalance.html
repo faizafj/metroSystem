@@ -10,8 +10,8 @@
           th:href="@{https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200}"/>
     <link rel="stylesheet"
           th:href="@{https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200}"/>
-	<script>
-	</script>
+    <script>
+    </script>
 </head>
 
 
@@ -32,44 +32,36 @@
 <h2 id="greeting" th:text="${'Welcome ' + session.customer.customerFirstName}"></h2>
 <article id="mainContainer" align="center">
 
-<form action="#" th:action="@{./tapIn}" th:object="${stationObj}">
-    <article id="side1">
-        <img th:src="@{images/profilepic.png}" id="profilePic">
-        <br>
-        <h2 id="currentBalance" th:text="${'Your current balance: £' + session.customer.customerBalance}"></h2>
+    <form action="#" th:action="@{./tapIn}" th:object="${stationObj}">
+        <article id="side1">
+            <img th:src="@{images/profilepic.png}" id="profilePic">
+            <br>
+            <h2 id="currentBalance" th:text="${'Your current balance: £' + session.customer.customerBalance}"></h2>
 
             <br>
             Select your current location :
             <select id="selection" th:field="*{stationId}">
-                <option th:each="station : ${stations}" th:value="${station.stationId}" th:label="${station.stationName}"
+                <option th:each="station : ${stations}" th:value="${station.stationId}"
+                        th:label="${station.stationName}"
                 ></option>
             </select>
-      
-    </article>
 
-    <article id="side2">
-        <button id="tapInButton">
-            TAP IN
-            <br>
+        </article>
+
+        <article id="side2">
+            <input type="submit" name="tapButton" value="Tap In" id="tapInButton">             <span class="material-symbols-outlined">
+                    arrow_upward
+                </span>
+            </input>
+
+        </article>
+
+        <article id="side3">
+            <input type="submit" name="tapButton" value="Tap Out" id="tapOutButton">
             <span class="material-symbols-outlined">
                     arrow_downward
                 </span>
-        </button>
-        
-    </article>
-</form>
-
-
-<!--    <form action="#" th:action="@{./tapIn}" th:object="${stationObj}">-->
-    <form>
-        <article id="side3">
-            <button id="tapOutButton">
-                TAP OUT
-                <br>
-                <span class="material-symbols-outlined">
-                    arrow_upward
-                </span>
-            </button>
+            </input>
         </article>
 
     </form>

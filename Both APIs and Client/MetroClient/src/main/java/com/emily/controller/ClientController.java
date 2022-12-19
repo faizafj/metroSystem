@@ -1,13 +1,12 @@
 package com.emily.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 import javax.servlet.http.HttpSession;
 
-import com.emily.entity.Station;
-import com.emily.entity.StationList;
-import com.emily.entity.Trip;
+import com.emily.entity.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.emily.entity.Customer;
 import com.emily.service.ClientService;
 
 @Controller
@@ -96,25 +94,37 @@ public class ClientController {
 		return stationList; //returns the station list
 	}
 
-	
+
 	@RequestMapping("/tapIn")
-	public ModelAndView tapInController(@ModelAttribute("stationObj") Station station, HttpSession session) {
-//	public ModelAndView tapInController() {
+	public ModelAndView tapInController(@ModelAttribute("stationObj") Station station , @RequestParam("tapButton")String tap, HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
-		
-//		Customer customer = (Customer) session.getAttribute("customer");
-//		
-		int stationId = station.getStationId();
+		Customer cust =(Customer)session.getAttribute("customer");
+		if (tap.equals("Tap In")) {
+			int stationId = station.getStationId();
+			System.out.print("Swipe in station id" + stationId);
+
 		System.out.println(stationId);
 		session.setAttribute("stationId", stationId);
-//		Trip trip = service.tapIn(customer, station.getStationId());
-//		 
-////		modelAndView.addObject("message", "You are travelling to "+station.getStationName());
-//		
-//		modelAndView.addObject("trip", trip);
+
 		modelAndView.addObject("stationObj", new Station());
-		modelAndView.setViewName("viewBalance2");
-		
+
+		Trip trip = service.tapIn(cust,stationId);
+		session.setAttribute("trip",trip);
+		modelAndView.setViewName("viewBalance");
+	}
+		else {
+			Trip tripOut = (Trip) session.getAttribute("trip");
+			int tripId = tripOut.getTripId();
+			System.out.print("Picking trip id for swipe out:" + tripId);
+			int stationId = station.getStationId();
+			System.out.print("Swipe out station id" + stationId);
+			Bill bill = service.tapOut(stationId, cust, tripId );
+			System.out.println(bill.getCustomerFirstName());
+			session.setAttribute("Bill", bill);
+			modelAndView.setViewName("viewBalance");
+
+		}
 		return modelAndView;
-	}	
+	}
+
 }
